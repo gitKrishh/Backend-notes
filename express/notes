@@ -1,0 +1,5 @@
+to create a node project:
+npm init -y
+
+if we do not want to restart the server everytime we edit something in the code:
+npm i -D nodemon

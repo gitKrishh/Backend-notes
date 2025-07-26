@@ -1,0 +1,21 @@
+{
+  "name": "first",
+  "version": "1.0.0",
+  "description": "a simple manager",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "keywords": [
+    "express"
+  ],
+  "author": "krish",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.1.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
+}
