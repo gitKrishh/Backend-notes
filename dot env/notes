@@ -1,0 +1,16 @@
+## dotenv :
+
+### What is .env?
+
+A .env file is a text file where you store environment variables — i.e., configuration values you don't want hardcoded into your app.
+
+
+### What is dotenv?
+
+dotenv is an npm package that loads your .env file and makes those values available inside your app using: process.env
+
+install : npm install dotenv
+
+import :
+first we have to paste this in the top : require('dotenv').config()
+then we need to make a file name ".env" in folder
