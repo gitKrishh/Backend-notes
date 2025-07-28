@@ -1,0 +1,7 @@
+## requirments
+
+1. npm i --save-dev nodemon prettier : 
+
+then we have to make a file name ".prettierrc" - this make the code pretty 
+after that we can also make .prettierignore file -- .prettierignore is a file where you tell Prettier to skip certain files or folders when formatting your project.
+
