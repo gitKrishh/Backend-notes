@@ -5,3 +5,14 @@
 then we have to make a file name ".prettierrc" - this make the code pretty 
 after that we can also make .prettierignore file -- .prettierignore is a file where you tell Prettier to skip certain files or folders when formatting your project.
 
+### to use dotenv we have to do some steps:
+
+     install : npm i dotenv
+     then we import dotenv in index.js to use it
+
+### cores:
+     install : npm i cors
+
+     CORS stands for Cross-Origin Resource Sharing.
+
+     It's a security feature implemented by browsers to control which origins (domains) can access your backend APIs.
