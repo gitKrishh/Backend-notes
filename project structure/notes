@@ -16,3 +16,16 @@ after that we can also make .prettierignore file -- .prettierignore is a file wh
      CORS stands for Cross-Origin Resource Sharing.
 
      It's a security feature implemented by browsers to control which origins (domains) can access your backend APIs.
+
+# Notes to connect mongodb:
+
+first we have to make a constants file and export a const name DB_NAME with string name of the database
+then add a index.js file in db folder and make a async await 
+
+
+🔧 Why use async/await with mongoose.connect()?
+mongoose.connect(...) is asynchronous
+
+    It takes time to connect to MongoDB (especially over a network).
+    It returns a Promise.
+    So we must wait for it to finish before doing anything else.
