@@ -41,7 +41,7 @@ const userSchema = new Schema({
 {timestamps: true}
 ) 
 
-export const User= mongoose.model("User", userSchema)
+export const User= mongoose.model("User", userSchema) //A model is a class with which we construct documents
 
 // User --->> but in db the mongoose autometically converts this in lower case and in plural format
 
