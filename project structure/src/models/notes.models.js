@@ -24,6 +24,6 @@ const notesSchema = new Schema({
 {timestamps: true}
 )
  
-notesSchema.plugin(mongooseAggregatePaginate)
+notesSchema.plugin(mongooseAggregatePaginate) //.plugin() is a Mongoose method that adds custom functionality to your schema.
 
 export const Notes= mongoose.model("Notes", notesSchema)

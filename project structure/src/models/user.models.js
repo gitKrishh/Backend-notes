@@ -8,6 +8,7 @@ id string pk
 */
 
 import mongoose, {Schema} from 'mongoose'
+import bycrypt from "bycrypt"
 
 const userSchema = new Schema({
     displayName: {
@@ -40,6 +41,16 @@ const userSchema = new Schema({
 },
 {timestamps: true}
 ) 
+
+userSchema.pre("save", async function (next) {
+
+    if(!this.modified("password")) return next()
+
+    this.password = bycrypt.hash(this.password, 10)
+    next()
+})
+
+
 
 export const User= mongoose.model("User", userSchema) //A model is a class with which we construct documents
 
