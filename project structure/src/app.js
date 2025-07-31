@@ -18,10 +18,15 @@ app.use(express.static("public")) //This middleware serves static files from the
 app.use(cookieParser())
 
 //import routes
-import  healthcheckRouter  from './routes/healthcheck.routes.js'
+import userRouter from './routes/user.routes.js' //AB ROUTER KO LANE KE LIYE MIDDLEWARE USE HOGA
+
+//routes decleration:
+app.use("/api/v1/users", userRouter)
+
+
 
 //routes
-app.use("/api/v1/healthcheck", healthcheckRouter)
+// app.use("/api/v1/healthcheck", healthcheckRouter)
 
 //GENERAL SYNTAX : app.use([path], callbackFunction OR router)
 /*
