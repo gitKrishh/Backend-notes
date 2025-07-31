@@ -51,7 +51,7 @@ userSchema.pre("save", async function (next) {// pre hook data save hone se just
 
     if (!this.isModified("password")) return next() // this refers to the Mongoose document that's currently being saved. and 
 
-    this.password = bycrypt.hash(this.password, 10)
+    this.password = await bycrypt.hash(this.password, 10)
     next()
 })
 
