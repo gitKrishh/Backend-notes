@@ -7,14 +7,14 @@ id string pk
   NotesTitle string
 */
 
-import mongoose, {Schema} from 'mongoose'
+import mongoose, { Schema } from 'mongoose'
 import bycrypt from "bycrypt" //helps you to hash your password
 import jwt from "jsonwebtoken"
 
 const userSchema = new Schema({
     displayName: {
         type: String,
-        required:true,
+        required: true,
         unique: true,
         index: true,
     },
@@ -26,9 +26,9 @@ const userSchema = new Schema({
     },
     NotesTitle: [
         {
-            type: Schema.Types.ObjectId ,  
+            type: Schema.Types.ObjectId,
             ref: "Title"
-            
+
         }
     ],
     password: {
@@ -38,43 +38,49 @@ const userSchema = new Schema({
     refreshToken: {
         type: String,
     },
-    
+    avatar: {
+        type: String, // cloudinary url
+        required: true,
+    },
+
 },
-{timestamps: true}
-) 
- 
+    { timestamps: true }
+)
+
 userSchema.pre("save", async function (next) {// pre hook data save hone se just pehele run hota
 
-    if(!this.isModified("password")) return next() // this refers to the Mongoose document that's currently being saved. and 
+    if (!this.isModified("password")) return next() // this refers to the Mongoose document that's currently being saved. and 
 
     this.password = bycrypt.hash(this.password, 10)
     next()
 })
 
-userSchema.methods.isPasswordCOrrect = async function(passwod){
+userSchema.methods.isPasswordCOrrect = async function (passwod) {
     return await bycrypt.compare(password, this.password)
 }
 
-userSchema.methods.generateAccessToken = function(){
+userSchema.methods.generateAccessToken = function () {
     //short lived access token
-    jwt.sign({_id: this._id,
+    jwt.sign({
+        _id: this._id,
         email: this.email
     },
-    process.env.ACCESS_TOKEN_SECRET,
-    {expiresIn: process.env.ACCESS_TOKEN_EXPIRY}
-)
+        process.env.ACCESS_TOKEN_SECRET,
+        { expiresIn: process.env.ACCESS_TOKEN_EXPIRY }
+    )
 }
-userSchema.methods.generateRefreshToken = function(){
+userSchema.methods.generateRefreshToken = function () {
     //long lived access token
-    jwt.sign({_id: this._id,//This is the data stored inside the token
+    jwt.sign({
+        _id: this._id,//This is the data stored inside the token
         //less data in refresh token then access token
     },
-    process.env.REFRESH_TOKEN_SECRET, //Used to sign the token so no one can tamper with it
-    {expiresIn: process.env.REFRESH_TOKEN_EXPIRY} //define how long the token is valid
-)
+        process.env.REFRESH_TOKEN_SECRET, //Used to sign the token so no one can tamper with it
+        { expiresIn: process.env.REFRESH_TOKEN_EXPIRY } //define how long the token is valid
+    )
 }
 
-export const User= mongoose.model("User", userSchema) //A model is a class with which we construct documents
+export const User = mongoose.model("User", userSchema) //A model is a class with which we construct documents
 
 // User --->> but in db the mongoose autometically converts this in lower case and in plural format
 
