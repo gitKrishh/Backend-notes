@@ -45,7 +45,7 @@ const userSchema = new Schema({
  
 userSchema.pre("save", async function (next) {// pre hook data save hone se just pehele run hota
 
-    if(!this.isModified("password")) return next() // this refers to the Mongoose document that's currently being saved.
+    if(!this.isModified("password")) return next() // this refers to the Mongoose document that's currently being saved. and 
 
     this.password = bycrypt.hash(this.password, 10)
     next()
@@ -66,11 +66,11 @@ userSchema.methods.generateAccessToken = function(){
 }
 userSchema.methods.generateRefreshToken = function(){
     //long lived access token
-    jwt.sign({_id: this._id,
-        email: this.email
+    jwt.sign({_id: this._id,//This is the data stored inside the token
+        //less data in refresh token then access token
     },
-    process.env.REFRESH_TOKEN_SECRET,
-    {expiresIn: process.env.REFRESH_TOKEN_EXPIRY}
+    process.env.REFRESH_TOKEN_SECRET, //Used to sign the token so no one can tamper with it
+    {expiresIn: process.env.REFRESH_TOKEN_EXPIRY} //define how long the token is valid
 )
 }
 
