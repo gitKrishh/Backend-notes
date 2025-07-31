@@ -13,8 +13,8 @@ const notesSchema = new Schema({
         required: true,
     },
     whichUser: {
-        type: String,
-        required: true,
+        type: Schema.Types.ObjectId,
+        ref: "user"
     },
     numberOfNotes: {
         type: Number,

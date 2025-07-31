@@ -11,6 +11,12 @@ class ApiError extends Error{
         this.message = message
         this.success = false
         this.errors = errors
+
+        if(stack){
+            this.stack = stack
+        }else{
+            Error.captureStackTrace(this, this.constructor)
+        }
     }
 }
 
@@ -33,4 +39,23 @@ Because super() can only accept what the parent class constructor is built to ha
 The native Error class is only built to accept one argument: message.
 
 Other values like statusCode, errors, success — those are custom properties you define after calling super():
+*/
+
+/*
+if (stack) { this.stack = stack }
+
+    This checks if a stack value was passed into the constructor (manually).
+
+    If so, it uses that value.
+
+🧠 Why?
+Sometimes developers manually set a custom stack for special error handling (e.g., when rethrowing or wrapping an error).
+
+Error.captureStackTrace() is a built-in V8 (Node.js) method that:
+
+    Captures the current call stack (i.e., where the error was thrown),
+
+    Assigns it to this.stack,
+
+    Excludes the constructor function (this.constructor) from the trace, so it's cleaner.
 */

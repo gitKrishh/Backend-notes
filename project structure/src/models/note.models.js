@@ -8,16 +8,16 @@ import mongoose, {Schema} from 'mongoose'
 
 const noteSchema = new Schema({
     id: {
-        type: string,
+        type: String, //cloudinary url
         required: true,
     },
     title: {
-        type: string,
-        require: true,
-
+        type: String, //cloudinary url
+        require: true, 
+        index: true
     },
     description: {
-        type: string,
+        type: String, //cloudinary url
         required: true,
     }
 },
