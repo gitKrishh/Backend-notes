@@ -8,7 +8,7 @@ id string pk
 */
 
 import mongoose, { Schema } from 'mongoose'
-import bycrypt from "bycrypt" //helps you to hash your password
+import bcrypt from "bcrypt" //helps you to hash your password
 import jwt from "jsonwebtoken"
 
 const userSchema = new Schema({
@@ -51,12 +51,12 @@ userSchema.pre("save", async function (next) {// pre hook data save hone se just
 
     if (!this.isModified("password")) return next() // this refers to the Mongoose document that's currently being saved. and 
 
-    this.password = await bycrypt.hash(this.password, 10)
+    this.password = await bcrypt.hash(this.password, 10)
     next()
 })
 
 userSchema.methods.isPasswordCOrrect = async function (passwod) {
-    return await bycrypt.compare(password, this.password)
+    return await bcrypt.compare(password, this.password)
 }
 
 userSchema.methods.generateAccessToken = function () {
