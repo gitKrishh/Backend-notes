@@ -1,0 +1,81 @@
+That’s a **very thoughtful** and important question—and it shows you’re starting to understand **how authentication works under the hood**.
+
+Let’s clarify your question first:
+
+> **“If the server *already knows* the JWT it sent, why should it need the browser to send the cookie back?”**
+
+---
+
+## 🔑 Answer:
+
+### ❗The server **does not store** the JWT after sending it. That’s the whole point of using JWTs.
+
+> ✅ **JWTs are stateless.**
+> Once the server creates and sends a JWT, **it forgets about it**. It doesn’t store it in memory or in a database.
+
+---
+
+## 🔁 So what happens?
+
+### 1. **Server creates a JWT when the user logs in:**
+
+```js
+const token = jwt.sign({ id: user._id, role: user.role }, secretKey, { expiresIn: "15m" });
+```
+
+### 2. **Server sends the token to the client (in a cookie):**
+
+```js
+res.cookie("accessToken", token, options).json({ ... });
+```
+
+✅ Now the **browser stores it** in cookies.
+
+---
+
+### 3. **Later, the client makes another request:**
+
+The browser sends:
+
+```http
+GET /api/v1/user/profile
+Cookie: accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6...
+```
+
+### 4. **Server receives the JWT back and verifies it:**
+
+```js
+const decoded = jwt.verify(req.cookies.accessToken, secretKey);
+```
+
+➡️ Only *then* can the server identify who the user is.
+Because the server **never stored the JWT**, it relies on the client to send it back.
+
+---
+
+## 💡 Why don’t we store it on the server?
+
+Because:
+
+* 🔹 JWTs are designed to be **stateless** (scalable & fast).
+* 🔹 No server-side memory/database lookup is needed.
+* 🔹 Works well with **microservices** or **load balancers** (no sticky sessions).
+* 🔹 Efficient for **mobile + frontend apps** that handle their own session logic.
+
+---
+
+## 🔒 But what about security?
+
+* We **sign the token** so no one can tamper with it.
+* We **set it as a cookie (HttpOnly + Secure)** so JS can’t read it (protects from XSS).
+* We set **expiration times** so it doesn’t stay valid forever.
+
+---
+
+## ✅ Summary:
+
+> The **server doesn’t remember or store the JWT**.
+> That’s why the **browser (client)** must send it back (via cookies or headers)
+> so the server can verify and authenticate the user on **every** request.
+
+Would you like to compare this with **sessions**, where the server *does* remember things?
